@@ -1,0 +1,123 @@
+SELECT * FROM Player
+
+
+SELECT M.id, M.season, M.stage, M.date 
+FROM Match M
+
+
+SELECT id, season, stage, date
+FROM Match
+
+
+SELECT matches.id, matches.season, matches.stage, matches.date
+FROM "Match" AS matches
+
+SELECT *
+FROM "Match" AS matches
+WHERE matches.country_id = 4769
+
+
+SELECT count(id)
+FROM Match
+WHERE match.country_id = 1
+OR country_id = 1729
+
+SELECT *
+FROM "Match" AS matches
+WHERE matches.country_id IN (1, 1729)
+
+
+SELECT *
+FROM Player
+WHERE UPPER(Player.player_name) LIKE 'JOHN %'
+
+SELECT *
+FROM Player
+WHERE UPPER(Player.player_name) LIKE ' % JOHN %'
+
+
+SELECT player_name
+FROM Player
+WHERE Player.height >= 200
+
+SELECT COUNT(Player.id)
+FROM Player
+WHERE Player.height >= 200
+
+
+SELECT *
+FROM Player
+ORDER BY Player.weight ASC
+
+
+SELECT * FROM "Match" AS matches
+GROUP BY matches.country_id
+
+SELECT COUNT(matches.id), matches.country_id
+FROM "Match" AS matches
+GROUP BY matches.country_id
+
+
+
+SELECT COUNT(matches.id) AS match_count, matches.country_id
+FROM "Match" AS matches
+GROUP BY matches.country_id
+ORDER BY match_count DESC
+
+
+SELECT COUNT(matches.id) AS match_count, matches.country_id
+FROM "Match" AS matches
+GROUP BY matches.country_id
+HAVING match_count >= 3000
+ORDER BY match_count DESC
+
+
+SELECT * FROM MATCH
+
+
+SELECT 
+COUNT(matches.id) AS outcome_count,
+CASE 
+    WHEN matches.home_team_goal > matches.away_team_goal
+        THEN 'home_win'
+    WHEN matches.home_team_goal = matches.away_team_goal
+        THEN 'draw'
+    ELSE 'away_win'
+END AS outcome
+FROM "Match" AS matches
+GROUP BY outcome
+
+
+
+
+SELECT League.name, Country.name
+FROM League
+JOIN Country ON League.country_id = Country.id
+
+
+SELECT 
+    League.id,
+    League.name AS league_name,
+    COUNT(matches.id) AS match_count,
+    Country.name AS country_name
+FROM "Match" AS matches
+JOIN League ON matches.league_id = League.id
+JOIN Country ON League.country_id = Country.id
+GROUP BY League.id
+ORDER BY
+    match_count DESC,
+    country_name ASC
+
+
+SELECT
+    League.id,
+    League.name AS league_name,
+    COUNT(matches.id) AS match_count,
+    Country.name AS country_name
+FROM "Match" AS matches
+JOIN League ON matches.league_id = League.id
+JOIN Country ON League.country_id = Country.id
+GROUP BY League.id
+ORDER BY
+    match_count DESC,
+    country_name ASC
